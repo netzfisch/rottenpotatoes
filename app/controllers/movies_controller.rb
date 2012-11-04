@@ -16,11 +16,11 @@ class MoviesController < ApplicationController
     end
     @all_ratings = Movie.all_ratings
     @selected_ratings = params[:ratings] || session[:ratings] || {}
-    
+
     if @selected_ratings == {}
       @selected_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
     end
-    
+
     if params[:sort] != session[:sort]
       session[:sort] = sort
       flash.keep
@@ -34,6 +34,17 @@ class MoviesController < ApplicationController
       redirect_to :sort => sort, :ratings => @selected_ratings and return
     end
     @movies = Movie.find_all_by_rating(@selected_ratings.keys, ordering)
+  end
+
+  def similar
+    @movie = Movie.find(params[:movie_id])
+    director = @movie.director
+    if director.blank?
+      flash[:notice] = "'#{@movie.title}' has no director info"
+      redirect_to root_path
+    else
+      @movies = Movie.find_all_by_director(director)
+    end
   end
 
   def new
@@ -65,3 +76,4 @@ class MoviesController < ApplicationController
   end
 
 end
+
