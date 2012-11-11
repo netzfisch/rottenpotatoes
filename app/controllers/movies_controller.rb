@@ -41,14 +41,10 @@ class MoviesController < ApplicationController
     director = @movie.director
     if director.blank?
       flash[:notice] = "'#{@movie.title}' has no director info"
-      redirect_to movies_path
+      redirect_to root_path
     else
-      @movies = Movie.same_director # alternatively: .find_all_by_director(director)
+      @movies = Movie.same_director(director) # alternatively: .find_all_by_director(director)
     end
-  end
-
-  def same_director(dra)
-    Movie.where(:director => draw)
   end
 
   def new

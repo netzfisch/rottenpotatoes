@@ -53,7 +53,7 @@ describe MoviesController do
 
     it 'should select the Index template for rendering and generate a flash' do
       get :similar, :movie_id => "3"
-      response.should redirect_to(movies_path)
+      response.should redirect_to(root_path)
       flash[:notice].should_not be_blank
     end
   end

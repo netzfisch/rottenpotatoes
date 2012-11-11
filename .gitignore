@@ -5,5 +5,7 @@ TAGS
 db/schema.rb
 log/
 db/*.sqlite3
+tmp/
 hw4.tar.gz
+hw4-2.tar.gz
 
